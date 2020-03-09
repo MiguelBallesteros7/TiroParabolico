@@ -5,6 +5,7 @@
 --%>
 
 <%@page import="java.util.ArrayList"%>
+<%@page import="modelo.tiro"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,27 +17,28 @@
         <h1>Hello World!</h1>
         
         <% ArrayList<String> angulos = (ArrayList<String>) request.getAttribute("angulos");
-        String  angulo="0";
-         String  velocidad="0";
-           /* String nombre = (String) request.getAttribute("nombre");
-            if (nombre == null) {
-                nombre = "";
-            }
-            Prestamo prest = (Prestamo) request.getAttribute("prestamo");
-            String importeP, cantidad, interes, tiempo;
-            if (prest == null) {
-                importeP = "";
-                cantidad = "0";
-                interes = "0";
-                tiempo = "12";
+        tiro tiroP =(tiro)request.getAttribute("tiroP");
+        
+         String angulo, velocidad,altura,alcance;
+            if (tiroP == null) {
+                velocidad = "0";
+                angulo = "0";
+                
+               
             } else {
-                importeP = String.valueOf(prest.getImportePrestamo());
-                cantidad = String.valueOf(prest.getCapital());
-                interes = String.valueOf(prest.getInteres());
-                tiempo = String.valueOf(prest.getTiempo());
-            }*/
+                velocidad = String.valueOf(tiroP.getvInicial());
+                angulo = String.valueOf(tiroP.getAngulo());
+                altura = String.valueOf(tiroP.getAlturaMax());
+                alcance =String.valueOf(tiroP.getAlcanceMax());
+ 
+            }
+        
+         
+         altura = String.valueOf(request.getAttribute("altura")) ;
+         alcance = String.valueOf(request.getAttribute("alcance")) ;
+         
         %>
-        <form action="Prestamo" method="post">
+        <form action="Tiro" method="post">
             <label for="velocidad">Velocidad(m/s):</label><input type="text" name="velocidad" value="<%=velocidad%>" id="velocidad"><br/>
             <label for="angulo">Angulo:</label><select name="angulo" id="angulo">
                 <% for (int m = 0; m < angulos.size(); m++) {
@@ -51,7 +53,10 @@
                 <% } %>     
             </select>
             <input type="submit" value="Consultar">
-            
+            <% if (tiroP != null) {%>
+            <h1>Altura Maxima: <%=altura%></h1>
+            <h1>Alcance Maximo: <%=alcance%></h1>
+            <% }%>
             
             </table>
         </form>
